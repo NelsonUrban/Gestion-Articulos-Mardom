@@ -1,0 +1,36 @@
+﻿@model Examen_Practico___MARDOM___Gestion_de_Articulos.Models.Tipo_Almacen
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Detalle Tipo Almacen</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.descripcion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.descripcion)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Activo)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Activo)
+                </dd>
+                
+            </dl>
+        </div>
+        <div class="modal-footer">
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+        </div>
+    </div>
+</div>

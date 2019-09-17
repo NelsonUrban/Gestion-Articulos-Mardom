@@ -1,0 +1,85 @@
+﻿
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-th-list"></i> Listado de Salidas de Almacen</h1>
+    </div>
+    <p>
+        <a href="@Url.Action("NewSalida", "SalidaAlmacen")" data-toggle="tooltip" data-placement="top" class="btn btn-primary bmd-btn-fab" title="Create">
+
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+
+            <span>
+
+                <strong>Create</strong>
+
+            </span>
+
+        </a>
+
+    </p>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <div>
+                    <table class="table" id="Articulo" style="width:100%">
+                        <thead>
+                            <tr>
+                                <td># Salida</td>
+                                <td>Almacen</td>
+                                <td>Precio</td>
+                                <td>Controles</td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Datatable
+{
+    <script>
+        var Popup, dataTable;
+        $(document).ready(function () {
+            datatable = $("#Articulo").DataTable(
+                 {
+                     "ajax": {
+                         "url": "@Url.Action("GetSalida", "SalidaAlmacen")",
+                         "type": "GET",
+                         "Datatype": "json"
+                     },
+                     "dom": 'Bfrtip',
+                     "buttons": [
+                      'copy','excel', 'pdf', 'print'
+                     ],
+                     "columns": [
+                       { "data": "Id" },
+                       { "data": "Almacen" },
+                       { "data": "Monto_Entrada" },
+                     
+                       {
+                           "data": "Id", "render": function (data)
+                           {
+
+                           return '<a href="@Url.Action("ReportSalida", "Report")?Id=' + data + '" class="detailsAsset" class="btn btn-primary bmd-btn-fab">Details Salida</a> |<a href="@Url.Action("Delete","SalidaAlmacen")?Id=' + data + '" class="deleteAsset">Delete</a>';
+                                console.log(data);
+                           },
+
+                           "orderable": false,
+                           "searchable": false,
+                           "width": "150px"
+                       }
+                     ],
+                     "language": {
+
+                         "emptyTable" : "No data found, Please click on <bCreate</b> Button"
+                     }
+
+
+                 });
+        });
+
+    </script>
+}

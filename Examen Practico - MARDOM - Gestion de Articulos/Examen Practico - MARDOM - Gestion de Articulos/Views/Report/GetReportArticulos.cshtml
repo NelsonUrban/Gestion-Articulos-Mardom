@@ -1,0 +1,10 @@
+﻿@using ReportViewerForMvc;
+
+@{
+    ViewBag.Title = "GetReportArticulos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Listados de Articulos</h2>
+
+@Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer )

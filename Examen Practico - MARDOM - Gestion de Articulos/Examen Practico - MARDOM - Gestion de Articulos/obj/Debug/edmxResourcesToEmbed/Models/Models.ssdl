@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Gestion_Articulos_MardomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Tipo_Almacen_Id" Type="int" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="Fecha_creacion" Type="datetime" Nullable="false" />
+    <Property Name="Fecha_Modificacion" Type="datetime" />
+    <Property Name="Maximo" Type="int" />
+    <Property Name="Minima" Type="int" />
+  </EntityType>
+  <EntityType Name="Articulo_stock">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Articulo_id" Type="int" Nullable="false" />
+    <Property Name="Almacen_Id" Type="int" Nullable="false" />
+    <Property Name="Existencia" Type="int" Nullable="false" />
+    <Property Name="fecha_creacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Articulos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Referencia" Type="varchar" MaxLength="20" />
+    <Property Name="Codigo_Barra" Type="varchar" MaxLength="20" />
+    <Property Name="Expira" Type="bit" Nullable="false" />
+    <Property Name="Precio_1" Type="float" Nullable="false" />
+    <Property Name="Precio_2" Type="float" />
+    <Property Name="Precio_3" Type="float" />
+    <Property Name="Tipo_Articulo_Id" Type="int" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="Fecha_creacion" Type="datetime" Nullable="false" />
+    <Property Name="Fecha_Modificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Detalle_Entrada_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Articulo_id" Type="int" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" />
+    <Property Name="Precio" Type="float" Nullable="false" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+    <Property Name="entrada_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Detalle_Salida_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Articulo_id" Type="int" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" />
+    <Property Name="Precio" Type="float" Nullable="false" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+    <Property Name="Salida_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Entrada_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Almacen_Id" Type="int" Nullable="false" />
+    <Property Name="Fecha_crea" Type="datetime" Nullable="false" />
+    <Property Name="Fecha_modifica" Type="datetime" />
+    <Property Name="Comentarios" Type="varchar" MaxLength="250" />
+    <Property Name="Total" Type="float" />
+  </EntityType>
+  <EntityType Name="Salida_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Almacen_Id" Type="int" Nullable="false" />
+    <Property Name="Fecha_crea" Type="datetime" Nullable="false" />
+    <Property Name="Fecha_modifica" Type="datetime" />
+    <Property Name="Comentarios" Type="varchar" MaxLength="250" />
+    <Property Name="Total" Type="float" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tipo_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="Fecha_creacion" Type="datetime" Nullable="false" />
+    <Property Name="Fecha_Modificacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Tipo_Articulo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="Fecha_creacion" Type="datetime" Nullable="false" />
+    <Property Name="Fecha_Modificacion" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Gestion_Articulos_Mardom.dbo.Valmacen' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Valmacen">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Descripcion" />
+      <PropertyRef Name="Tipo_Almacen" />
+      <PropertyRef Name="Activo" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Tipo_Almacen" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Gestion_Articulos_Mardom.dbo.VEntrada_Almacen' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VEntrada_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Almacen" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Almacen" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Fecha_Entrada" Type="date" />
+    <Property Name="Monto_Entrada" Type="float" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Gestion_Articulos_Mardom.dbo.VSalida_Almacen' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="VSalida_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Almacen" />
+      <PropertyRef Name="Fecha_crea" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Almacen" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Fecha_crea" Type="datetime" Nullable="false" />
+    <Property Name="Monto_Entrada" Type="float" />
+  </EntityType>
+  <Association Name="FK_Almacen_Tipo_Almacen">
+    <End Role="Tipo_Almacen" Type="Self.Tipo_Almacen" Multiplicity="1" />
+    <End Role="Almacen" Type="Self.Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Almacen">
+        <PropertyRef Name="Tipo_Almacen_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulo_stock_Almacen">
+    <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+    <End Role="Articulo_stock" Type="Self.Articulo_stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Articulo_stock">
+        <PropertyRef Name="Almacen_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulo_stock_Articulos">
+    <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
+    <End Role="Articulo_stock" Type="Self.Articulo_stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Articulos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Articulo_stock">
+        <PropertyRef Name="Articulo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulos_Tipo_Articulo">
+    <End Role="Tipo_Articulo" Type="Self.Tipo_Articulo" Multiplicity="1" />
+    <End Role="Articulos" Type="Self.Articulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_Articulo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Articulos">
+        <PropertyRef Name="Tipo_Articulo_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_Entrada_Almacen_Articulos">
+    <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
+    <End Role="Detalle_Entrada_Almacen" Type="Self.Detalle_Entrada_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Articulos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Detalle_Entrada_Almacen">
+        <PropertyRef Name="Articulo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_Entrada_Almacen_Entrada_Almacen">
+    <End Role="Entrada_Almacen" Type="Self.Entrada_Almacen" Multiplicity="1" />
+    <End Role="Detalle_Entrada_Almacen" Type="Self.Detalle_Entrada_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Entrada_Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Detalle_Entrada_Almacen">
+        <PropertyRef Name="entrada_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_Salida_Almacen_Articulos">
+    <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
+    <End Role="Detalle_Salida_Almacen" Type="Self.Detalle_Salida_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Articulos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Detalle_Salida_Almacen">
+        <PropertyRef Name="Articulo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_Salida_Almacen_Salida_Almacen">
+    <End Role="Salida_Almacen" Type="Self.Salida_Almacen" Multiplicity="1" />
+    <End Role="Detalle_Salida_Almacen" Type="Self.Detalle_Salida_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Salida_Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Detalle_Salida_Almacen">
+        <PropertyRef Name="Salida_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Entrada_Almacen_Almacen">
+    <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+    <End Role="Entrada_Almacen" Type="Self.Entrada_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Entrada_Almacen">
+        <PropertyRef Name="Almacen_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Salida_Almacen_Almacen">
+    <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+    <End Role="Salida_Almacen" Type="Self.Salida_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Salida_Almacen">
+        <PropertyRef Name="Almacen_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="Sp_Entrada_Almacen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Articuloid" Type="int" Mode="In" />
+    <Parameter Name="Cantidad" Type="int" Mode="In" />
+    <Parameter Name="Existencia" Type="int" Mode="In" />
+    <Parameter Name="ExistenciaActual" Type="int" Mode="In" />
+    <Parameter Name="almacen_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Sp_Report_DetEntradaAlmacen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idEntrada" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Sp_Report_DetSalidaAlmacen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idSalida" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Sp_Report_EntradaAlmacen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idEntrada" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Sp_Report_List_Articulos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Sp_Report_SalidaAlmacen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idSalida" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Sp_Salida_Almacen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Articuloid" Type="int" Mode="In" />
+    <Parameter Name="Cantidad" Type="int" Mode="In" />
+    <Parameter Name="Existencia" Type="int" Mode="In" />
+    <Parameter Name="ExistenciaActual" Type="int" Mode="In" />
+    <Parameter Name="almacen_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Sp_VerificarProductoEnStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Almacen_ID" Type="int" Mode="In" />
+    <Parameter Name="Articulo_id" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="Gestion_Articulos_MardomModelStoreContainer">
+    <EntitySet Name="Almacen" EntityType="Self.Almacen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Articulo_stock" EntityType="Self.Articulo_stock" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Articulos" EntityType="Self.Articulos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Detalle_Entrada_Almacen" EntityType="Self.Detalle_Entrada_Almacen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Detalle_Salida_Almacen" EntityType="Self.Detalle_Salida_Almacen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Entrada_Almacen" EntityType="Self.Entrada_Almacen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Salida_Almacen" EntityType="Self.Salida_Almacen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tipo_Almacen" EntityType="Self.Tipo_Almacen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tipo_Articulo" EntityType="Self.Tipo_Articulo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Valmacen" EntityType="Self.Valmacen" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Valmacen].[Id] AS [Id], 
+    [Valmacen].[Descripcion] AS [Descripcion], 
+    [Valmacen].[Tipo_Almacen] AS [Tipo_Almacen], 
+    [Valmacen].[Activo] AS [Activo]
+    FROM [dbo].[Valmacen] AS [Valmacen]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VEntrada_Almacen" EntityType="Self.VEntrada_Almacen" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VEntrada_Almacen].[Id] AS [Id], 
+    [VEntrada_Almacen].[Almacen] AS [Almacen], 
+    [VEntrada_Almacen].[Fecha_Entrada] AS [Fecha_Entrada], 
+    [VEntrada_Almacen].[Monto_Entrada] AS [Monto_Entrada]
+    FROM [dbo].[VEntrada_Almacen] AS [VEntrada_Almacen]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="VSalida_Almacen" EntityType="Self.VSalida_Almacen" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [VSalida_Almacen].[Id] AS [Id], 
+    [VSalida_Almacen].[Almacen] AS [Almacen], 
+    [VSalida_Almacen].[Fecha_crea] AS [Fecha_crea], 
+    [VSalida_Almacen].[Monto_Entrada] AS [Monto_Entrada]
+    FROM [dbo].[VSalida_Almacen] AS [VSalida_Almacen]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Almacen_Tipo_Almacen" Association="Self.FK_Almacen_Tipo_Almacen">
+      <End Role="Tipo_Almacen" EntitySet="Tipo_Almacen" />
+      <End Role="Almacen" EntitySet="Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulo_stock_Almacen" Association="Self.FK_Articulo_stock_Almacen">
+      <End Role="Almacen" EntitySet="Almacen" />
+      <End Role="Articulo_stock" EntitySet="Articulo_stock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulo_stock_Articulos" Association="Self.FK_Articulo_stock_Articulos">
+      <End Role="Articulos" EntitySet="Articulos" />
+      <End Role="Articulo_stock" EntitySet="Articulo_stock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulos_Tipo_Articulo" Association="Self.FK_Articulos_Tipo_Articulo">
+      <End Role="Tipo_Articulo" EntitySet="Tipo_Articulo" />
+      <End Role="Articulos" EntitySet="Articulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_Entrada_Almacen_Articulos" Association="Self.FK_Detalle_Entrada_Almacen_Articulos">
+      <End Role="Articulos" EntitySet="Articulos" />
+      <End Role="Detalle_Entrada_Almacen" EntitySet="Detalle_Entrada_Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_Entrada_Almacen_Entrada_Almacen" Association="Self.FK_Detalle_Entrada_Almacen_Entrada_Almacen">
+      <End Role="Entrada_Almacen" EntitySet="Entrada_Almacen" />
+      <End Role="Detalle_Entrada_Almacen" EntitySet="Detalle_Entrada_Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_Salida_Almacen_Articulos" Association="Self.FK_Detalle_Salida_Almacen_Articulos">
+      <End Role="Articulos" EntitySet="Articulos" />
+      <End Role="Detalle_Salida_Almacen" EntitySet="Detalle_Salida_Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_Salida_Almacen_Salida_Almacen" Association="Self.FK_Detalle_Salida_Almacen_Salida_Almacen">
+      <End Role="Salida_Almacen" EntitySet="Salida_Almacen" />
+      <End Role="Detalle_Salida_Almacen" EntitySet="Detalle_Salida_Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Entrada_Almacen_Almacen" Association="Self.FK_Entrada_Almacen_Almacen">
+      <End Role="Almacen" EntitySet="Almacen" />
+      <End Role="Entrada_Almacen" EntitySet="Entrada_Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Salida_Almacen_Almacen" Association="Self.FK_Salida_Almacen_Almacen">
+      <End Role="Almacen" EntitySet="Almacen" />
+      <End Role="Salida_Almacen" EntitySet="Salida_Almacen" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

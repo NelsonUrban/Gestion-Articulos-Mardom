@@ -1,0 +1,106 @@
+﻿@model  Examen_Practico___MARDOM___Gestion_de_Articulos.ViewModel.VmEntradasAlmacen
+
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-flag" aria-hidden="true"></i><i> Reporte Entrada Almacen </i></h1>
+        <p> Salida Almacen </p>
+    </div>
+    <div align="right">
+        <button class="btn btn-outline-primary" style="margin-bottom:10px" onclick="window.print();">Imprimir</button>
+    </div>
+</div>
+<form>
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card border-info mb-6" style="max-width: 50rem;">
+                                <div class="card-header"><h1><i>Entrada Almacen </i></h1></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card border mb-6" style="max-width: 50rem;">
+                                <div class="card-header"><h1><i></i></h1></div>
+                                <div class="card-body ">
+                                    <div class="text-align:left;">
+                                        <label class="form-group"><i><B>Almacen: @Model.Entrada.Almacen</B></i></label>
+                                    </div>
+                                    <div class="text-align:left;">
+                                        <label class="form-group"><i><B>Salida NO: @Model.Entrada.Id</B></i></label>
+                                    </div>
+                                    <div class="text-align:left;">
+                                        <label class="form-group"><i><B>Fecha Salida : @Model.Entrada.Fecha_crea</B></i></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Codigo</th>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Total</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ListEntradaDetalle)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.Codigo_Barra
+                                        </td>
+                                        <td>
+                                            @item.Producto
+                                        </td>
+                                        <td>
+                                            @item.Precio
+                                        </td>
+                                        <td>
+                                            (@item.Cantidad *  @item.Precio)
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot align="right">
+                                <tr>
+                                    <th colspan="6">Total</th>
+                                    <td>$ @Model.Entrada.Monto_Entrada</td>
+                                </tr>
+
+                            </tfoot>
+
+                        </table>
+                    </div>
+                    <div class="row" align="center">
+                        <div class="card-body">
+                            <h6><b><i>  Recibido Por : __________________________________________</i></b></h6>
+                        </div>
+                        <div class="card-body">
+                            <h6><b><i>Despachado Por : __________________________________________</i></b></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,70 @@
+﻿@model  Examen_Practico___MARDOM___Gestion_de_Articulos.ViewModel.VmTipoAlmacen
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="app-title">
+
+    <div>
+
+        <h1><i class="fa fa-product-hunt" aria-hidden="true"></i><i>  Crear Nuevo Tipo Almacen</i></h1>
+
+    </div>
+
+    <div align="right">
+
+
+
+    </div>
+
+</div>
+@if (@ViewBag.Mensaje != null)
+{
+    <div class="col-md-12">
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+            <h4><i class="icon fa fa-warning"></i> Alerta</h4>
+            @ViewBag.Mensaje
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <form>
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="tile">
+
+                    <div class="tile-body">
+
+
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                @Html.LabelFor(model => model.Descripcion)
+                                <input type="text" class="form-control" name="Descripcion" id="validationDefault01" placeholder="Nombre" required>
+                            </div>                          
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        @Html.EditorFor(model => model.Activo)
+                                        @Html.LabelFor(model => model.Activo)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Create</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

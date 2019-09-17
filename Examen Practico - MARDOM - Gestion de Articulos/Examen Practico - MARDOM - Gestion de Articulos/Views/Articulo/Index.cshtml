@@ -1,0 +1,88 @@
+﻿
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-th-list"></i> Listado de Productos</h1>
+    </div>
+    <p>
+        <a href="@Url.Action("Create", "Articulo")" data-toggle="tooltip" data-placement="top" class="btn btn-primary bmd-btn-fab" title="Create">
+
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+
+            <span>
+
+                <strong>Create</strong>
+
+            </span>
+
+        </a>
+
+    </p>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <div>
+                    <table class="table" id="Articulo" style="width:100%">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Nombre</td>
+                                <td>Precio Uno</td>
+                                <td>Referencia</td>
+                                <td>Activo</td>                              
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Datatable
+{
+    <script>
+        var Popup, dataTable;
+        $(document).ready(function () {
+            datatable = $("#Articulo").DataTable(
+                 {
+                     "ajax": {
+                         "url": "@Url.Action("GetArticulo", "Articulo")",
+                         "type": "GET",
+                         "Datatype": "json"
+                     },
+                     "dom": 'Bfrtip',
+                     "buttons": [
+                      'copy','excel', 'pdf', 'print'
+                     ],
+                     "columns": [
+                       { "data": "Id" },
+                       { "data": "Nombre" },
+                       { "data": "Precio_1" },
+                       { "data": "Referencia" },
+                       { "data": "Activo" },                      
+                       {
+                           "data": "Id", "render": function (data)
+                           {
+
+                           return '<a href="@Url.Action("Details", "Articulo")?Id=' + data + '" class="detailsAsset" class="btn btn-primary bmd-btn-fab">Details</a> |<a href="@Url.Action("Delete","Articulo")?Id=' + data + '" class="deleteAsset">Delete</a>';
+                                console.log(data);
+                           },
+
+                           "orderable": false,
+                           "searchable": false,
+                           "width": "150px"
+                       }
+                     ],
+                     "language": {
+
+                         "emptyTable" : "No data found, Please click on <bCreate</b> Button"
+                     }
+
+
+                 });
+        });
+
+    </script>
+}

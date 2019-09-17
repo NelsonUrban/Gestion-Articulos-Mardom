@@ -1,0 +1,431 @@
+﻿@model Examen_Practico___MARDOM___Gestion_de_Articulos.ViewModel.VmEntradaAlmacen
+
+@{
+    ViewBag.Title = "Nueva Entrada Almacen";
+}
+
+@using (Html.BeginForm("NewEntrada", "EntradaAlmacen", FormMethod.Post))
+{
+    <div class="app-title">
+        <div>
+            <h1>Nueva Entrada Almacen</h1>
+        </div>
+        <div align="right">
+            <p>
+                <button type="submit" id="Enviar" class="btn btn-primary">Guardar Entrada</button>
+
+            </p>
+        </div>
+    </div>
+
+    <input type="text" id="detalle" name="Detalle" hidden />
+    <input type="text" id="Total1" name="Total1" hidden />
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"> General</h5>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(model => model.Almacen_Id, "Almacen")
+                            @Html.DropDownListFor(model => model.Almacen_Id, new SelectList(Model.Almacen, "Id", "Descripcion"), htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Almacen_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group col-md-12">
+                        @Html.LabelFor(model => model.Comentarios, "Referencias / Comentarios")
+                        <textarea class="form-control" id="Comentarios" name="Comentarios" rows="3" placeholder="Comentarios"></textarea>
+                        @Html.ValidationMessageFor(model => model.Comentarios, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="tile-body">
+        <div class="card text-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tile">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                @Html.LabelFor(Model => Model.Articulo_id, "Producto")
+                                @Html.EditorFor(model => model.Articulo_id, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Articulo_id, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(Model => Model.Descripcion, "Descripcion")
+                                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(Model => Model.cantidad, "cantidad")
+                                @Html.EditorFor(model => model.cantidad, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.cantidad, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-2">
+                                @Html.LabelFor(Model => Model.precio, "Precio")
+                                @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.precio, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <button id="adicionar" class="btn btn-success" type="button">Adicionar a la tabla</button>
+                    <p>
+                        <b>Elementos en la Tabla:</b>
+                        <div id="adicionados"></div>
+                    </p>
+                    <table id="mytable" class="table table-hover">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Descripcion</th>
+                            <th>cantidad</th>
+                            <th>Precio</th>
+                            <th>Total</th>
+                            <th>Eliminar Producto</th>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <div class="form-row">
+                        <div class="col">
+                            Sub-Total: @Html.EditorFor(model => model.Sub_Total, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+
+                        <div class="col">
+                            Total : @Html.EditorFor(model => model.Total_Apagar, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    <script src="~/Content/common/commonFunctions.js"></script>
+
+
+    <script>
+        // Quitar Submit de botones
+        $(document).on("keypress", 'form', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+    <script>
+        $("#Articulo_id").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#cantidad").focus();
+            }
+        });
+        $("#cantidad").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#adicionar").focus();
+            }
+        });
+
+
+    </script>
+
+
+    <script src="~/Content/common/commonFunctions.js"></script>
+    <script>
+        $(document).ready(function () {
+            //obtenemos el valor de los input
+            $('#adicionar').click(function () {
+                //var Cantidad2 = 0;
+                var Articulo_id = document.getElementById("Articulo_id").value;
+                var Descripcion = document.getElementById("Descripcion").value;
+                var cantidad = document.getElementById("cantidad").value;
+                var precio = document.getElementById("precio").value;
+
+                var i = 0; //contador para asignar id al boton que borrara la fila
+                var fila = '<tr id="row' + i + '"><td>' + Articulo_id + '</td><td>' + Descripcion + '</td><td>' + cantidad + '</td><td>' + precio + '</td><td><label id="total" name="total"></label></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">Quitar</button></td></tr>'; //esto seria lo que contendria la fila
+
+                i++;
+
+                $('#mytable tr:first').after(fila);
+                $("#adicionados").text(""); //esta instruccion limpia el div adicioandos para que no se vayan acumulando
+                var nFilas = $("#mytable tr").length;
+                $("#adicionados").append(nFilas - 1);
+                //le resto 1 para no contar la fila del header
+                document.getElementById("Descripcion").value = "";
+                document.getElementById("cantidad").value = 0;
+                document.getElementById("precio").value = "";
+                //document.getElementById("descuento").value = 0;
+                document.getElementById("Articulo_id").value = "";
+                document.getElementById("Articulo_id").focus();
+
+
+            });
+
+            $(document).on('click', '.btn_remove', function () {
+                var button_id = $(this).attr("id");
+                //cuando da click obtenemos el id del boton
+                Limpiar();
+                $('#row' + button_id + '').remove(); //borra la fila
+                //limpia el para que vuelva a contar las filas de la tabla
+                $("#adicionados").text("");
+                var nFilas = $("#mytable tr").length;
+                $("#adicionados").append(nFilas - 1);
+            });
+        });
+    </script>
+    <script>
+        function Limpiar() {
+            document.getElementById("Sub_Total").value = "";
+            //document.getElementById("Total_Descuento").value = "";
+            document.getElementById("Total_Apagar").value = "";
+        }
+    </script>
+
+    <script type="text/javascript">
+        // integrando Detalle  de factura JSON
+        $(function () {
+            $("#Enviar").click(function () {
+                var Itemes = [];
+                $("tbody tr").each(function (el) {
+                    var ItemOrder = {};
+
+                    var tds = $(this).find("td");
+
+                    ItemOrder.Producto = tds.filter(":eq(0)").text();
+                    ItemOrder.Descripcion = tds.filter(":eq(1)").text();
+                    ItemOrder.cantidad = tds.filter(":eq(2)").text();
+                    ItemOrder.Precio = parseFloat(tds.filter(":eq(3)").text());
+                    //ItemOrder.Descuento = parseFloat(tds.filter(":eq()").text());
+                    ItemOrder.Total = parseFloat(tds.filter(":eq(4)").text());
+                    Itemes.push(ItemOrder);
+                });
+                var jsonObj = [];
+
+                for (var i = 1; i < Itemes.length; i++) // Quitando Linea En Blanco para mandarla alcontrolador
+                {
+                    var Item = {};
+                    if ((Itemes[i].precio !== " ") && (Itemes[i].precio !== null)) {
+                        Item.precio = Itemes[i].Precio;
+                        Item.producto = Itemes[i].Producto;
+                        Item.descuento = Itemes[i].Descuento;
+                        //Item.Descripcion = Itemes[i].Descripcion;
+                        Item.Cantidad = Itemes[i].cantidad;
+                        Item.Total = Itemes[i].Total;
+
+                        jsonObj.push(Item);
+                    }
+
+                }
+                document.getElementById("detalle").value = JSON.stringify(jsonObj);
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#adicionar").click(function () {
+                var totalFila = 0; var precio1 = 0;
+                $("tbody tr").each(function () {
+                    var subTotal = 0;
+                    var total = 0;
+                    var descuen01 = 0;
+                    var tds = $(this).find("td");
+                    var Cantidad1 = parseInt(tds.filter(":eq(2)").text());
+                    var Precio = parseFloat(tds.filter(":eq(3)").text());
+                    //var Descuento = parseFloat(tds.filter(":eq(4)").text());
+                    subTotal += Cantidad1 * Precio;
+                    total += (subTotal);
+                    //descuen01 += Descuento;
+
+                    tds.filter(":eq(4)").text(Math.ceil((subTotal)).toFixed(2)); //5 = Total linea
+                    //$('#total').text(Math.ceil(subTotal).toFixed(2));
+                    var tdSubTotal = 0;
+                    var tdTotal = 0;
+                    var tdDescuento = 0;
+
+                    if ((isNaN($('#Total_Descuento').val()))) {
+                        tdDescuento = descuen01;
+
+                    }
+                    else {
+                        tdDescuento = parseFloat($('#Total_Descuento').val()) + descuen01;
+
+                    }
+                    $('#Total_Descuento').val(Math.ceil(tdDescuento).toFixed(2));
+
+
+                    if ((isNaN($('#Total_Apagar').val()))) {
+                        tdTotal = total;
+                    }
+                    else {
+                        tdTotal = parseFloat($('#Total_Apagar').val()) + total;
+
+                    }
+                    $('#Total_Apagar').val(Math.ceil(tdTotal).toFixed(2));
+
+                    if ((isNaN($('#Sub_Total').val()))) {
+                        tdSubTotal = subTotal;
+                    }
+                    else {
+                        tdSubTotal = parseFloat($('#Sub_Total').val()) + subTotal;
+
+                    }
+                    $('#Sub_Total').val(Math.ceil(tdSubTotal).toFixed(2));
+                    document.getElementById("Total1").value = $('#Total_Apagar').val();
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        // integrando Detalle  de entrada JSON
+        $(function () {
+            $("#Enviar").click(function () {
+                var Itemes = [];
+                $("tbody tr").each(function (el) {
+                    var ItemOrder = {};
+
+                    var tds = $(this).find("td");
+
+                    ItemOrder.Producto = tds.filter(":eq(0)").text();
+                    ItemOrder.Descripcion = tds.filter(":eq(1)").text();
+                    ItemOrder.cantidad = tds.filter(":eq(2)").text();
+                    ItemOrder.Precio = parseFloat(tds.filter(":eq(3)").text());
+                    ItemOrder.total = parseFloat(tds.filter(":eq(4)").text());
+                    Itemes.push(ItemOrder);
+                });
+                var jsonObj = [];
+
+                for (var i = 1; i < Itemes.length; i++) // Quitando Linea En Blanco para mandarla alcontrolador
+                {
+                    var Item = {};
+                    if ((Itemes[i].precio !== " ") && (Itemes[i].precio !== null)) {
+                        Item.precio = Itemes[i].Precio;
+                        Item.producto = Itemes[i].Producto;
+                        Item.Descripcion = Itemes[i].Descripcion;
+                        Item.Cantidad = Itemes[i].cantidad;
+                        Item.total = Itemes[i].total;
+
+                        jsonObj.push(Item);
+                    }
+
+                }
+                document.getElementById("detalle").value = JSON.stringify(jsonObj);
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#adicionar").click(function () {
+                var totalFila = 0; var precio1 = 0;
+                $("tbody tr").each(function () {
+                    var subTotal = 0;
+                    var total = 0;
+                    var tds = $(this).find("td");
+
+                    var Cantidad1 = parseInt(tds.filter(":eq(2)").text());
+                    console.log(Cantidad1);
+                    var Precio = parseFloat(tds.filter(":eq(3)").text());
+                    var Total = parseFloat(tds.filter(":eq(4)").text());
+                    subTotal += Cantidad1 * Precio;
+                    total += (Total);
+
+
+
+                    tds.filter(":eq(4)").text(Math.ceil((subTotal)).toFixed(2)); // = Total linea
+                    //$('#total').text(Math.ceil(subTotal).toFixed(2));
+                    var tdSubTotal = 0;
+                    var tdTotal = 0;
+
+
+
+                    if ((isNaN($('#Total_Apagar').val()))) {
+                        tdTotal = total;
+                    }
+                    else {
+                        tdTotal = parseFloat($('#Total_Apagar').val()) + total;
+
+                    }
+                    $('#Total_Apagar').val(Math.ceil(tdTotal).toFixed(2));
+
+                    if ((isNaN($('#Sub_Total').val()))) {
+                        tdSubTotal = subTotal;
+                    }
+                    else {
+                        tdSubTotal = parseFloat($('#Sub_Total').val()) + subTotal;
+
+                    }
+                    $('#Sub_Total').val(Math.ceil(tdSubTotal).toFixed(2));
+                    document.getElementById("Total1").value = $('#Total_Apagar').val();
+                });
+            });
+        });
+    </script>
+
+    <script>
+        function myfunction() {
+            var Valor = $('#Total_Apagar').val();
+            return Valor;
+        }
+
+    </script>
+
+    <script type="text/javascript">
+
+                $(document).ready(function () {
+                    var link = '@Url.Action("GetArticulo", "EntradaAlmacen", new { Id=1})'; // Productos
+                    $("#Articulo_id").keyup(function () {
+                        var dir = link.replace(1, $("#Articulo_id").val());
+                        console.log(dir);
+                        $.ajax({
+                            async: true,
+                            type: "post",
+                            url: dir,
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (response) {
+
+                                for (var i = 0; i < response.length; i++)
+                                {
+                                    var items = response[i];
+                                    $("#Descripcion").val(items.Nombre);
+                                    $("#precio").val(items.Precio_1);
+                                }
+                            },
+                            error: function (response) {
+                                alert("El Campo no Puede estar en Blanco!");
+                            }
+                        });
+
+                    });
+                });
+    </script>
+
+    <script>
+
+        if ($("#cantidad").val() == 0 && $("#productoid").val() != 0) {
+            alert("La cantidad No puede Ser 0 !");
+            $("#cantidad").focus();
+        }
+    </script>
+
+
+}

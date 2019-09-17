@@ -1,0 +1,183 @@
+﻿@model IEnumerable<Examen_Practico___MARDOM___Gestion_de_Articulos.Models.Almacen>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="app-title">
+
+    <div>
+
+        <h1><i class="fa fa-product-hunt" aria-hidden="true"></i>  Almacenes</h1>
+
+        <p> Listado de Almacenes</p>
+
+    </div>
+
+    <div align="right">
+
+        <p>
+            <a href="@Url.Action("Create", "Almacen")" data-toggle="tooltip" data-placement="top" class="btn btn-primary bmd-btn-fab" title="Create">
+
+                <i class="fa fa-plus-square" aria-hidden="true"></i>
+
+                <span>
+
+                    <strong>Create</strong>
+
+                </span>
+
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+<div class="row">
+
+    <div class="col-md-12">
+
+        <div class="tile">
+
+            <div class="tile-body">
+                <table class="display nowrap" id="Almacen" width="100%">
+                    <thead>
+                        <tr>
+                            <td>Id</td>
+                            <td>Nombre</td>
+                            <td>Tipo_Almacen</td>
+                            <td>Activo</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="modal fade" id="detailsAssetModal" tabindex="-1" role="dialog" aria-labelledby="DetailsAssetModal" aria-hidden="true" data-backdrop="static">
+    <div id="detailsAssetContainer">
+    </div>
+</div>
+<div class="modal fade" id="deleteAssetModal" tabindex="-1" role="dialog" aria-labelledby="DeleteAssetModal" aria-hidden="true" data-backdrop="static">
+    <div id="deleteAssetContainer">
+    </div>
+</div>
+
+<div class="modal fade" id="editAssetModal" tabindex="-1" role="dialog" aria-labelledby="EditAssetModal" aria-hidden="true" data-backdrop="static">
+    <div id="editAssetContainer">
+    </div>
+</div>
+@section Datatable
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Almacen").DataTable(
+                 {
+                     "ajax": {
+                         "url": "@Url.Action("GetAlmacen", "Almacen")",
+                         "type": "GET",
+                         "Datatype": "json"
+                     },
+                     "dom": 'Bfrtip',
+                     "buttons": [
+                      'copy', 'csv', 'excel', 'pdf', 'print'
+                     ],
+                     "columns": [
+                       { "data": "Id" },
+                       { "data": "Descripcion" },
+                       { "data": "Tipo_Almacen" },
+                       { "data": "Activo" },
+
+                        {
+                            "data": "Id", "render": function (data) {
+
+                                return '<a href="@Url.Action("Details", "Almacen")?Id=' + data + '" >Details</a> |<a href="@Url.Action("Delete","Almacen")?Id='+ data + '" >Delete</a>';
+                                console.log(data);
+                            },
+
+                            "orderable": false,
+                            "searchable": false,
+                            "width": "150px"
+                        }
+                     ]
+
+
+                 });
+        });
+
+
+        function UpdateAssetSuccess(data) {
+
+            if (data != "success") {
+                $('#editAssetContainer').html(data);
+                return;
+            }
+            $('#editAssetModal').modal('hide');
+            $('#editAssetContainer').html("");
+            assetListVM.refresh();
+
+        }
+
+        $('#assets-data-table').on("click", ".detailsAsset", function (event) {
+
+            event.preventDefault();
+
+            var url = $(this).attr("href");
+
+            $.get(url, function (data) {
+                $('#detailsAssetContainer').html(data);
+
+                $('#detailsAssetModal').modal('show');
+            });
+
+        });
+
+
+        $('#CajaTable').on("click", ".detailsAsset", function (event) {
+
+            event.preventDefault();
+
+            var url = $(this).attr("href");
+
+            $.get(url, function (data) {
+                $('#detailsAssetContainer').html(data);
+
+                $('#detailsAssetModal').modal('show');
+            });
+
+        });
+        function DeleteAssetSuccess(data) {
+
+            if (data != "success") {
+                $('#deleteAssetContainer').html(data);
+                return;
+            }
+            $('#deleteAssetModal').modal('hide');
+            $('#deleteAssetContainer').html("");
+            assetListVM.refresh();
+
+        }
+
+        $('#assets-data-table').on("click", ".deleteAsset", function (event) {
+
+            event.preventDefault();
+
+            var url = $(this).attr("href");
+
+            $.get(url, function (data) {
+                $('#deleteAssetContainer').html(data);
+
+                $('#deleteAssetModal').modal('show');
+            });
+
+        });
+
+
+    </script>
+}

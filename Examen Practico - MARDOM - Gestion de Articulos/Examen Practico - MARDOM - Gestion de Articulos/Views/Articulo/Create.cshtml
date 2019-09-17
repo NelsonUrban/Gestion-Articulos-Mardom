@@ -1,0 +1,108 @@
+﻿@model  Examen_Practico___MARDOM___Gestion_de_Articulos.ViewModel.VmArticulos
+
+@{
+
+    ViewBag.Mensaje = "";
+
+}
+<h1>@ViewBag.Message</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-th-list"></i> <i>Articulos</i></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Informacion general</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    @Html.LabelFor(model => model.Nombre)
+                                    <input class="form-control" placeholder="Nombre" id="Nombre" name="Nombre" , required>
+                                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-4">
+                                    @Html.LabelFor(model => model.Referencia)
+                                    <input class="form-control" placeholder="Referencia" name="Referencia" id="referencia">
+                                    @Html.ValidationMessageFor(model => model.Referencia, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-4">
+                                    @Html.LabelFor(model => model.Codigo_Barra, "Codigo Barra")
+                                    <input class="form-control" placeholder="Codigo barra" name="Codigo_Barra">
+                                    @Html.ValidationMessageFor(model => model.Codigo_Barra, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-4">
+                                    @Html.LabelFor(model => model.Tipo_Articulo_id, "Tipo de Articulo")
+                                    @Html.DropDownListFor(model => model.Tipo_Articulo_id, new SelectList(Model.TipoArticulo, "Id", "Descripcion"), htmlAttributes: new { @class = "form-control" })
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    @Html.LabelFor(model => model.Precio_1)
+                                    <input class="form-control" placeholder="Precio #1" id="Precio_1" name="Precio_1" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    @Html.LabelFor(model => model.Precio_2)
+                                    <input class="form-control" placeholder="Precio #2" value="0" id="Precio_2" name="Precio_2">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    @Html.LabelFor(model => model.Precio_3)
+                                    <input class="form-control" placeholder="Precio #3" value="0" id="Precio_3" name="Precio_3">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-check">
+                                    @Html.EditorFor(model => model.Expira)
+                                    @Html.LabelFor(model => model.Expira)
+                                </div>
+                                <div class="form-check">
+                                    @Html.EditorFor(model => model.Activo)
+                                    @Html.LabelFor(model => model.Activo)
+                                </div>
+                            </div>
+
+                            <div>
+                                <button class="btn btn-primary" type="submit">Create</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+
+    </div>
+
+        }
+        @section Scripts
+{
+            <script>
+                $(document).ready(function () {
+                    $(function () {
+                        $("#Fecha_Vencimiento").datepicker();
+                    });
+                });
+
+            </script>
+
+        }
+       
+ 
+    

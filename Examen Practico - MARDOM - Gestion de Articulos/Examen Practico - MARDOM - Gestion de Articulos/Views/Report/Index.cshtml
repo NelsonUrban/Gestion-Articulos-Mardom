@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index Listado de Articulos</h2>
+
+
+<button type="button" name="btnImprimir"  id="btnImprimir"> imprimir</button>
+
+
+<div id="myPartialContainer">
+
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+        $('#btnImprimir').click(function () {
+
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("GetReportArticulos", "Report")',
+
+                success: function (data) {
+                    $('#myPartialContainer').html(data);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+    </script>
+}

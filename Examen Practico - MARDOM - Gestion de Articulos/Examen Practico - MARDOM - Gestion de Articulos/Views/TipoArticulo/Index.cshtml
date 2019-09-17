@@ -1,0 +1,117 @@
+﻿@model IEnumerable<Examen_Practico___MARDOM___Gestion_de_Articulos.Models.Tipo_Articulo>
+
+
+<div class="app-title">
+
+    <div>
+
+        <h1><i class="fa fa-globe" aria-hidden="true"></i> Tipos de Articulos </h1>
+
+        <p> Listado de Tipos de Articulos</p>
+
+    </div>
+
+    <div align="right">
+
+        <p>
+            <a href="@Url.Action("create", "TipoArticulo")" data-toggle="tooltip" data-placement="top" class="btn btn-primary bmd-btn-fab" title="Create">
+
+                <i class="fa fa-plus-square" aria-hidden="true"></i>
+
+                <span>
+
+                    <strong>Create</strong>
+
+                </span>
+
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <div>
+                    <table class="table" id="tipoAlmacen">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Nombre</td>
+                                <td>Activo</td>
+                                <td>Controles</td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Datatable
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#tipoAlmacen").DataTable(
+                 {
+                     "ajax": {
+                         "url": "@Url.Action("GetTipoArticulo", "TipoArticulo")",
+                         "type": "GET",
+                         "Datatype": "json"
+                     },
+                     "dom": 'Bfrtip',
+                     "buttons": [
+                      'copy', 'csv', 'excel', 'pdf', 'print'
+                     ],
+                     "columns": [
+                       { "data": "Id" },
+                       { "data": "descripcion" },
+                       { "data": "Activo" },
+
+                       {
+                            "data": "Id", "render": function (data) {
+
+                                return '<a href="@Url.Action("Details", "TipoArticulo")?Id=' + data + '" >Details</a> |<a href="@Url.Action("Delete","TipoArticulo")?Id='+ data + '" >Delete</a>';
+                                console.log(data);
+                            },
+
+                            "orderable": false,
+                            "searchable": false,
+                            "width": "150px"
+                        }
+                     ]
+
+
+                 });
+        });
+
+
+        // Function para Update
+        $(document).on("click", ".btn-edit", function (e) {
+            e.preventDefault();
+            var id = $(this).parent().parent().children().first().text();
+            @*var url = @Url.Action("Details","Caja",new { id = 1});
+            var ss= url.replace(1,id)*@
+            console.log(id);
+
+
+        });
+
+        // Function para Delete
+        $(document).on("click", ".btn-Delete", function (e) {
+            e.preventDefault();
+            console.log("delete");
+
+        });
+
+
+
+    </script>
+
+
+
+}

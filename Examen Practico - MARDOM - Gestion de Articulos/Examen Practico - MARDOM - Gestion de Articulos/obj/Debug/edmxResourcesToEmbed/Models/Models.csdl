@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Gestion_Articulos_MardomModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo_Almacen_Id" Type="Int32" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="Fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Fecha_Modificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Tipo_Almacen" Relationship="Self.FK_Almacen_Tipo_Almacen" FromRole="Almacen" ToRole="Tipo_Almacen" />
+    <NavigationProperty Name="Articulo_stock" Relationship="Self.FK_Articulo_stock_Almacen" FromRole="Almacen" ToRole="Articulo_stock" />
+    <NavigationProperty Name="Entrada_Almacen" Relationship="Self.FK_Entrada_Almacen_Almacen" FromRole="Almacen" ToRole="Entrada_Almacen" />
+    <NavigationProperty Name="Salida_Almacen" Relationship="Self.FK_Salida_Almacen_Almacen" FromRole="Almacen" ToRole="Salida_Almacen" />
+    <Property Name="Maximo" Type="Int32" />
+    <Property Name="Minima" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Articulo_stock">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Articulo_id" Type="Int32" Nullable="false" />
+    <Property Name="Almacen_Id" Type="Int32" Nullable="false" />
+    <Property Name="Existencia" Type="Int32" Nullable="false" />
+    <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Almacen" Relationship="Self.FK_Articulo_stock_Almacen" FromRole="Articulo_stock" ToRole="Almacen" />
+    <NavigationProperty Name="Articulos" Relationship="Self.FK_Articulo_stock_Articulos" FromRole="Articulo_stock" ToRole="Articulos" />
+  </EntityType>
+  <EntityType Name="Articulos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Referencia" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Codigo_Barra" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Expira" Type="Boolean" Nullable="false" />
+    <Property Name="Precio_1" Type="Double" Nullable="false" />
+    <Property Name="Precio_2" Type="Double" />
+    <Property Name="Precio_3" Type="Double" />
+    <Property Name="Tipo_Articulo_Id" Type="Int32" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="Fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Fecha_Modificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Articulo_stock" Relationship="Self.FK_Articulo_stock_Articulos" FromRole="Articulos" ToRole="Articulo_stock" />
+    <NavigationProperty Name="Tipo_Articulo" Relationship="Self.FK_Articulos_Tipo_Articulo" FromRole="Articulos" ToRole="Tipo_Articulo" />
+    <NavigationProperty Name="Detalle_Entrada_Almacen" Relationship="Self.FK_Detalle_Entrada_Almacen_Articulos" FromRole="Articulos" ToRole="Detalle_Entrada_Almacen" />
+    <NavigationProperty Name="Detalle_Salida_Almacen" Relationship="Self.FK_Detalle_Salida_Almacen_Articulos" FromRole="Articulos" ToRole="Detalle_Salida_Almacen" />
+  </EntityType>
+  <EntityType Name="Detalle_Entrada_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Articulo_id" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <Property Name="Precio" Type="Double" Nullable="false" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="entrada_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Articulos" Relationship="Self.FK_Detalle_Entrada_Almacen_Articulos" FromRole="Detalle_Entrada_Almacen" ToRole="Articulos" />
+    <NavigationProperty Name="Entrada_Almacen" Relationship="Self.FK_Detalle_Entrada_Almacen_Entrada_Almacen" FromRole="Detalle_Entrada_Almacen" ToRole="Entrada_Almacen" />
+  </EntityType>
+  <EntityType Name="Detalle_Salida_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Articulo_id" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <Property Name="Precio" Type="Double" Nullable="false" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Salida_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Articulos" Relationship="Self.FK_Detalle_Salida_Almacen_Articulos" FromRole="Detalle_Salida_Almacen" ToRole="Articulos" />
+    <NavigationProperty Name="Salida_Almacen" Relationship="Self.FK_Detalle_Salida_Almacen_Salida_Almacen" FromRole="Detalle_Salida_Almacen" ToRole="Salida_Almacen" />
+  </EntityType>
+  <EntityType Name="Entrada_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Almacen_Id" Type="Int32" Nullable="false" />
+    <Property Name="Fecha_crea" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Fecha_modifica" Type="DateTime" Precision="3" />
+    <Property Name="Comentarios" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Almacen" Relationship="Self.FK_Entrada_Almacen_Almacen" FromRole="Entrada_Almacen" ToRole="Almacen" />
+    <NavigationProperty Name="Detalle_Entrada_Almacen" Relationship="Self.FK_Detalle_Entrada_Almacen_Entrada_Almacen" FromRole="Entrada_Almacen" ToRole="Detalle_Entrada_Almacen" />
+    <Property Name="Total" Type="Double" />
+  </EntityType>
+  <EntityType Name="Salida_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Almacen_Id" Type="Int32" Nullable="false" />
+    <Property Name="Fecha_crea" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Fecha_modifica" Type="DateTime" Precision="3" />
+    <Property Name="Comentarios" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Almacen" Relationship="Self.FK_Salida_Almacen_Almacen" FromRole="Salida_Almacen" ToRole="Almacen" />
+    <NavigationProperty Name="Detalle_Salida_Almacen" Relationship="Self.FK_Detalle_Salida_Almacen_Salida_Almacen" FromRole="Salida_Almacen" ToRole="Detalle_Salida_Almacen" />
+    <Property Name="Total" Type="Double" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Tipo_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="Fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Fecha_Modificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Almacen" Relationship="Self.FK_Almacen_Tipo_Almacen" FromRole="Tipo_Almacen" ToRole="Almacen" />
+  </EntityType>
+  <EntityType Name="Tipo_Articulo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <Property Name="Fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Fecha_Modificacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Articulos" Relationship="Self.FK_Articulos_Tipo_Articulo" FromRole="Tipo_Articulo" ToRole="Articulos" />
+  </EntityType>
+  <Association Name="FK_Almacen_Tipo_Almacen">
+    <End Role="Tipo_Almacen" Type="Self.Tipo_Almacen" Multiplicity="1" />
+    <End Role="Almacen" Type="Self.Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Almacen">
+        <PropertyRef Name="Tipo_Almacen_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulo_stock_Almacen">
+    <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+    <End Role="Articulo_stock" Type="Self.Articulo_stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Articulo_stock">
+        <PropertyRef Name="Almacen_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Entrada_Almacen_Almacen">
+    <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+    <End Role="Entrada_Almacen" Type="Self.Entrada_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Entrada_Almacen">
+        <PropertyRef Name="Almacen_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Salida_Almacen_Almacen">
+    <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+    <End Role="Salida_Almacen" Type="Self.Salida_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Salida_Almacen">
+        <PropertyRef Name="Almacen_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulo_stock_Articulos">
+    <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
+    <End Role="Articulo_stock" Type="Self.Articulo_stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Articulos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Articulo_stock">
+        <PropertyRef Name="Articulo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulos_Tipo_Articulo">
+    <End Role="Tipo_Articulo" Type="Self.Tipo_Articulo" Multiplicity="1" />
+    <End Role="Articulos" Type="Self.Articulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo_Articulo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Articulos">
+        <PropertyRef Name="Tipo_Articulo_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_Entrada_Almacen_Articulos">
+    <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
+    <End Role="Detalle_Entrada_Almacen" Type="Self.Detalle_Entrada_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Articulos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Detalle_Entrada_Almacen">
+        <PropertyRef Name="Articulo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_Salida_Almacen_Articulos">
+    <End Role="Articulos" Type="Self.Articulos" Multiplicity="1" />
+    <End Role="Detalle_Salida_Almacen" Type="Self.Detalle_Salida_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Articulos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Detalle_Salida_Almacen">
+        <PropertyRef Name="Articulo_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_Entrada_Almacen_Entrada_Almacen">
+    <End Role="Entrada_Almacen" Type="Self.Entrada_Almacen" Multiplicity="1" />
+    <End Role="Detalle_Entrada_Almacen" Type="Self.Detalle_Entrada_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Entrada_Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Detalle_Entrada_Almacen">
+        <PropertyRef Name="entrada_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detalle_Salida_Almacen_Salida_Almacen">
+    <End Role="Salida_Almacen" Type="Self.Salida_Almacen" Multiplicity="1" />
+    <End Role="Detalle_Salida_Almacen" Type="Self.Detalle_Salida_Almacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Salida_Almacen">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Detalle_Salida_Almacen">
+        <PropertyRef Name="Salida_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Gestion_Articulos_MardomEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Almacen" EntityType="Self.Almacen" />
+    <EntitySet Name="Articulo_stock" EntityType="Self.Articulo_stock" />
+    <EntitySet Name="Articulos" EntityType="Self.Articulos" />
+    <EntitySet Name="Detalle_Entrada_Almacen" EntityType="Self.Detalle_Entrada_Almacen" />
+    <EntitySet Name="Detalle_Salida_Almacen" EntityType="Self.Detalle_Salida_Almacen" />
+    <EntitySet Name="Entrada_Almacen" EntityType="Self.Entrada_Almacen" />
+    <EntitySet Name="Salida_Almacen" EntityType="Self.Salida_Almacen" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Tipo_Almacen" EntityType="Self.Tipo_Almacen" />
+    <EntitySet Name="Tipo_Articulo" EntityType="Self.Tipo_Articulo" />
+    <AssociationSet Name="FK_Almacen_Tipo_Almacen" Association="Self.FK_Almacen_Tipo_Almacen">
+      <End Role="Tipo_Almacen" EntitySet="Tipo_Almacen" />
+      <End Role="Almacen" EntitySet="Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulo_stock_Almacen" Association="Self.FK_Articulo_stock_Almacen">
+      <End Role="Almacen" EntitySet="Almacen" />
+      <End Role="Articulo_stock" EntitySet="Articulo_stock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Entrada_Almacen_Almacen" Association="Self.FK_Entrada_Almacen_Almacen">
+      <End Role="Almacen" EntitySet="Almacen" />
+      <End Role="Entrada_Almacen" EntitySet="Entrada_Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Salida_Almacen_Almacen" Association="Self.FK_Salida_Almacen_Almacen">
+      <End Role="Almacen" EntitySet="Almacen" />
+      <End Role="Salida_Almacen" EntitySet="Salida_Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulo_stock_Articulos" Association="Self.FK_Articulo_stock_Articulos">
+      <End Role="Articulos" EntitySet="Articulos" />
+      <End Role="Articulo_stock" EntitySet="Articulo_stock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulos_Tipo_Articulo" Association="Self.FK_Articulos_Tipo_Articulo">
+      <End Role="Tipo_Articulo" EntitySet="Tipo_Articulo" />
+      <End Role="Articulos" EntitySet="Articulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_Entrada_Almacen_Articulos" Association="Self.FK_Detalle_Entrada_Almacen_Articulos">
+      <End Role="Articulos" EntitySet="Articulos" />
+      <End Role="Detalle_Entrada_Almacen" EntitySet="Detalle_Entrada_Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_Salida_Almacen_Articulos" Association="Self.FK_Detalle_Salida_Almacen_Articulos">
+      <End Role="Articulos" EntitySet="Articulos" />
+      <End Role="Detalle_Salida_Almacen" EntitySet="Detalle_Salida_Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_Entrada_Almacen_Entrada_Almacen" Association="Self.FK_Detalle_Entrada_Almacen_Entrada_Almacen">
+      <End Role="Entrada_Almacen" EntitySet="Entrada_Almacen" />
+      <End Role="Detalle_Entrada_Almacen" EntitySet="Detalle_Entrada_Almacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detalle_Salida_Almacen_Salida_Almacen" Association="Self.FK_Detalle_Salida_Almacen_Salida_Almacen">
+      <End Role="Salida_Almacen" EntitySet="Salida_Almacen" />
+      <End Role="Detalle_Salida_Almacen" EntitySet="Detalle_Salida_Almacen" />
+    </AssociationSet>
+    <EntitySet Name="Valmacen" EntityType="Gestion_Articulos_MardomModel.Valmacen" />
+    <FunctionImport Name="Sp_Entrada_Almacen">
+      <Parameter Name="Articuloid" Mode="In" Type="Int32" />
+      <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+      <Parameter Name="Existencia" Mode="In" Type="Int32" />
+      <Parameter Name="ExistenciaActual" Mode="In" Type="Int32" />
+      <Parameter Name="almacen_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Salida_Almacen">
+      <Parameter Name="Articuloid" Mode="In" Type="Int32" />
+      <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+      <Parameter Name="Existencia" Mode="In" Type="Int32" />
+      <Parameter Name="ExistenciaActual" Mode="In" Type="Int32" />
+      <Parameter Name="almacen_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="VSalida_Almacen" EntityType="Gestion_Articulos_MardomModel.VSalida_Almacen" />
+    <EntitySet Name="VEntrada_Almacen" EntityType="Gestion_Articulos_MardomModel.VEntrada_Almacen" />
+    <FunctionImport Name="Sp_VerificarProductoEnStock">
+      <Parameter Name="Almacen_ID" Mode="In" Type="Int32" />
+      <Parameter Name="Articulo_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Report_List_Articulos" ReturnType="Collection(Gestion_Articulos_MardomModel.Sp_Report_List_Articulos_Result)" />
+    <FunctionImport Name="Sp_Report_DetSalidaAlmacen" ReturnType="Collection(Gestion_Articulos_MardomModel.Sp_Report_DetSalidaAlmacen_Result)">
+      <Parameter Name="idSalida" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Report_SalidaAlmacen" ReturnType="Collection(Gestion_Articulos_MardomModel.Sp_Report_SalidaAlmacen_Result)">
+      <Parameter Name="idSalida" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Report_DetEntradaAlmacen" ReturnType="Collection(Gestion_Articulos_MardomModel.Sp_Report_DetEntradaAlmacen_Result)">
+      <Parameter Name="idEntrada" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Report_EntradaAlmacen" ReturnType="Collection(Gestion_Articulos_MardomModel.Sp_Report_EntradaAlmacen_Result)">
+      <Parameter Name="idEntrada" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="Valmacen">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Descripcion" />
+      <PropertyRef Name="Tipo_Almacen" />
+      <PropertyRef Name="Activo" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Tipo_Almacen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VSalida_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Almacen" />
+      <PropertyRef Name="Fecha_crea" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Almacen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha_crea" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Monto_Entrada" Type="Double" />
+  </EntityType>
+  <EntityType Name="VEntrada_Almacen">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Almacen" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Almacen" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha_Entrada" Type="DateTime" Precision="0" />
+    <Property Name="Monto_Entrada" Type="Double" />
+  </EntityType>
+  <ComplexType Name="Sp_Report_List_Articulos_Result">
+    <Property Type="String" Name="Codigo" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="Precio_1" Nullable="false" />
+    <Property Type="Double" Name="Precio_2" Nullable="true" />
+    <Property Type="Double" Name="Precio_3" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Sp_Report_DetSalidaAlmacen_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Codigo_Barra" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Producto" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="Precio" Nullable="false" />
+    <Property Type="Int32" Name="Cantidad" Nullable="false" />
+    <Property Type="Double" Name="Total" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Sp_Report_SalidaAlmacen_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Almacen" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="Fecha_crea" Nullable="false" Precision="23" />
+    <Property Type="Double" Name="Monto_Entrada" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Sp_Report_DetEntradaAlmacen_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Codigo_Barra" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="Producto" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="Precio" Nullable="false" />
+    <Property Type="Int32" Name="Cantidad" Nullable="false" />
+    <Property Type="Double" Name="Total" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="Sp_Report_EntradaAlmacen_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Almacen" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="Fecha_crea" Nullable="false" Precision="23" />
+    <Property Type="Double" Name="Monto_Entrada" Nullable="true" />
+  </ComplexType>
+</Schema>

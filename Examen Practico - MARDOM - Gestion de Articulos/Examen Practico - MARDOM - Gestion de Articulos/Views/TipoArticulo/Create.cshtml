@@ -1,0 +1,59 @@
+﻿@model Examen_Practico___MARDOM___Gestion_de_Articulos.ViewModel.VmTipoArticulo
+
+    <div class="app-title">
+
+        <div>
+
+            <h1><i class="fa fa-globe" aria-hidden="true"></i> <i>Create Tipos de Articulos</i> </h1>
+         
+
+        </div>
+
+        <div align="right">
+
+
+
+            </p>
+
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <form>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="tile">
+
+                        <div class="tile-body">
+
+                            <h4> Tipos Articulos</h4>
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    @Html.LabelFor(model => model.Descripcion)
+                                    <input type="text" class="form-control" name="Descripcion" id="validationDefault01" placeholder="Nombre">
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Activo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <div class="checkbox">
+                                            @Html.EditorFor(model => model.Activo)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Create</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
